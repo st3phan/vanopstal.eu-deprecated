@@ -1,0 +1,98 @@
+<!doctype html>
+<html class="no-js" lang="nl">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Gulp & Sass: keep your task running - Stephan van Opstal</title>
+        <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/blog/feed.xml" />
+        <meta name="description" content="Stephan van Opstal is a freelance Front-end Developer specialized in RWD and HTML/CSS.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="/stylesheets/blog/blog.css">
+        <link rel="stylesheet" href="/stylesheets/blog/solarized_light.css">
+</head>
+<body class="blog">
+
+    <nav class="nav">
+        <a href="/" class="home">Home</a>
+        <ol>
+            <li><a href="/blog">Articles</a></li>
+            <li><a href="/">Portfolio</a></li>
+        </ol>
+    </nav>
+
+        <article class="blog__article" role="main" itemscope itemtype="http://schema.org/BlogPosting">
+        <h1 itemprop="name">Gulp & Sass: keep your task running</h1>
+        <p>So you&#39;re using <a href="https://www.npmjs.com/package/gulp-sass">gulp-sass</a> to compile your Sass files but every time your code contains an error Gulp stops. After fixing the error you find yourself manually restarting the Gulp process. Here&#39;s a little tip to avoid that and keep Gulp running.</p>
+
+<p>For the sake of simplicity let&#39;s say your Gulp config looks like this:</p>
+
+<pre><code class="javascript">var gulp = require(&#39;gulp&#39;);
+var sass = require(&#39;gulp-sass&#39;);
+
+gulp.task(&#39;styles&#39;, function () {
+    gulp.src(&#39;./sass/**/*.scss&#39;)
+    .pipe(sass({
+        outputStyle: &#39;compressed&#39;
+    }))
+    .pipe(gulp.dest(&#39;./css&#39;));
+});
+
+gulp.task(&#39;default&#39;, function() {
+    gulp.watch(&#39;./sass/**/*.scss&#39;, [&#39;styles&#39;]);
+});
+</code></pre>
+
+<p>Let&#39;s change the <code>styles</code> task by catching the error using the onError option that <a href="https://www.npmjs.com/package/gulp-sass">gulp-sass</a> provides:</p>
+
+<pre><code class="javascript">//...
+
+gulp.task(&#39;styles&#39;, function () {
+    gulp.src(&#39;./sass/**/*.scss&#39;)
+    .pipe(sass({
+        outputStyle: &#39;compressed&#39;,
+        onError: function(err) {
+            return console.log(err);
+        }
+    }))
+    .pipe(gulp.dest(&#39;./css&#39;));
+});
+
+//...
+</code></pre>
+
+<p>There we go! Gulp will now keep running if it finds an error and recompiles after the error has been fixed without you manually restarting Gulp.</p>
+
+        <footer><p>Published: <data itemprop="datePublished" value="2015-09-22">September 22, 2015</data>.</p></footer>
+        <div class="blog__article__disqus">
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+//<![CDATA[
+                  var disqus_shortname = 'stephanvanopstal';
+          
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+//]]>
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+        </div>
+    </article>
+
+
+    <script src="/javascripts/blog/all.js"></script>
+    <script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-878657-3', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

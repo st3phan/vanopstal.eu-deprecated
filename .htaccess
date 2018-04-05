@@ -1,0 +1,9 @@
+php_flag display_errors on
+
+AddType text/javascript .js
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^vanopstal.eu
+RewriteRule ^(.*)$ http://www.vanopstal.eu/$1 [R=301,L]
+</IfModule>

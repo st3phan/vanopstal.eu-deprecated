@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Stephan van Opstal</title>
+  <subtitle>Freelance Front-end Developer</subtitle>
+  <id>http://www.vanopstal.eu/blog</id>
+  <link href="http://www.vanopstal.eu/blog"/>
+  <link href="http://www.vanopstal.eu/blog/blog/feed.xml" rel="self"/>
+  <updated>2015-12-03T01:00:00+01:00</updated>
+  <author>
+    <name>Stephan van Opstal</name>
+  </author>
+  <entry>
+    <title>Meteor methods and security</title>
+    <link rel="alternate" href="http://www.vanopstal.eu/blog/meteor-methods-and-security"/>
+    <id>http://www.vanopstal.eu/blog/meteor-methods-and-security</id>
+    <published>2015-12-03T01:00:00+01:00</published>
+    <updated>2015-12-03T13:24:17+01:00</updated>
+    <author>
+      <name>Stephan van Opstal</name>
+    </author>
+    <content type="html">&lt;p&gt;After watching an episode of &lt;a href="https://twitter.com/joshowens"&gt;Josh Owens&lt;/a&gt; &lt;a href="https://www.youtube.com/watch?v=oaKOqcutkdc"&gt;Meteor Club Q&amp;amp;A about security&lt;/a&gt; I picked up some tips from guest &lt;a href="https://twitter.com/petecorey"&gt;Pete Corey&lt;/a&gt; about meteor methods.&lt;/p&gt;
+
+&lt;p&gt;Did you know that calling &lt;code&gt;Meteor.connection._methodHandlers&lt;/code&gt; from your console lists all available methods on the client? You can also see all your collection inserts, updates and removes from there.&lt;/p&gt;
+
+&lt;p&gt;A few things to consider if you write your methods in a shared location (for optimistic UI goodness):&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Every method you write is going to be callable by any user. Even if you intend a method to only be called by your server code, it can be called by anyone. Even if it&amp;#39;s in a server only location where a client can&amp;#39;t see the definition. A client can see a call to it. The&amp;#39;ll know it exists and they can call it themselves with whatever arguments they want.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Do not store any application secrets in methods (like API keys). Do not not hard code them in your application. That should go into your &lt;a href="http://docs.meteor.com/#/full/meteor_settings"&gt;Meteor Settings&lt;/a&gt;. Your methods should reference that settings object.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The only reason to hide method bodies is if there is some kind of business secret in it. Specific logic to your business that you see some value in that you don&amp;#39;t want other people in your industry to see. You could always seperate out your client and server methods.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Never trust user input. Make sure it is what you&amp;#39;re expecting it to be. Always &lt;a href="http://docs.meteor.com/#/full/check"&gt;check&lt;/a&gt; your methods arguments.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Responsive CSS timeline</title>
+    <link rel="alternate" href="http://www.vanopstal.eu/blog/reponsive-css-timeline"/>
+    <id>http://www.vanopstal.eu/blog/reponsive-css-timeline</id>
+    <published>2015-10-30T01:00:00+01:00</published>
+    <updated>2015-12-03T14:48:52+01:00</updated>
+    <author>
+      <name>Stephan van Opstal</name>
+    </author>
+    <content type="html">&lt;p&gt;A client asked me to code a responsive CSS-only timeline, and so I did. The CSS might look a bit tedious at first but it really isn&amp;#39;t. No rocket science here. You can see the whole thing in action on &lt;a href="http://codepen.io/stephanvanopstal/full/YyvxZZ/"&gt;Codepen&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The markup is really basic. The ordered list of events asks for an &lt;code&gt;&amp;lt;ol&amp;gt;&lt;/code&gt;. The &lt;code&gt;&amp;lt;time&amp;gt;&lt;/code&gt; element holds the date.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="html"&gt;&amp;lt;ol class=&amp;quot;timeline&amp;quot;&amp;gt;
+    &amp;lt;li&amp;gt;
+        &amp;lt;time&amp;gt;2015&amp;lt;/time&amp;gt;
+        &amp;lt;p&amp;gt;Bacon ipsum dolor amet cupim fatback strip steak beef ribs beef. Ham swine salami ribeye kielbasa, bacon boudin pork chop beef brisket fatback hamburger pancetta shoulder sirloin.&amp;lt;/p&amp;gt;
+    &amp;lt;/li&amp;gt;
+    &amp;lt;li&amp;gt;
+        &amp;lt;time&amp;gt;2014&amp;lt;/time&amp;gt;
+        &amp;lt;p&amp;gt;Capicola chuck beef porchetta bresaola short ribs sausage ground round chicken shoulder jowl. Jowl prosciutto leberkas, pork picanha swine sirloin turducken salami venison.&amp;lt;/p&amp;gt;
+    &amp;lt;/li&amp;gt;
+    &amp;lt;li&amp;gt;
+        &amp;lt;time&amp;gt;2013&amp;lt;/time&amp;gt;
+        &amp;lt;p&amp;gt;Meatball corned beef tri-tip, pork chop salami spare ribs chuck filet mignon ham meatloaf sausage.&amp;lt;/p&amp;gt;
+    &amp;lt;/li&amp;gt;
+    &amp;lt;li&amp;gt;
+        &amp;lt;time&amp;gt;2012&amp;lt;/time&amp;gt;
+        &amp;lt;p&amp;gt; T-bone swine biltong leberkas jerky sirloin strip steak drumstick pig ham meatball frankfurter bresaola turducken.&amp;lt;/p&amp;gt;
+    &amp;lt;/li&amp;gt;
+    &amp;lt;li&amp;gt;
+        &amp;lt;time&amp;gt;2011&amp;lt;/time&amp;gt;
+        &amp;lt;p&amp;gt;Flank filet mignon chicken, sausage drumstick doner hamburger swine tail cupim ham hock meatloaf biltong. Short ribs boudin chuck bresaola strip steak pastrami cow beef ribs porchetta tail rump filet mignon t-bone.&amp;lt;/p&amp;gt;
+    &amp;lt;/li&amp;gt;
+&amp;lt;/ol&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The SCSS (Sass). Where I used padding for the odd/even styling because the events needed a background-color. The spine and the dots are all absolute positioned pseudo elements. Media queries are used to position both the line and dots.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="css"&gt;.timeline {
+    margin: 0;
+    padding: 40px;
+    list-style-type: none;
+    font-family: Georgia;
+
+    li {
+        box-sizing: border-box;
+        position: relative;
+        background-color: #EDF5FF;
+        padding: 30px 40px 30px 80px;
+        border: 2px solid #EDF5FF;
+
+        @media (min-width: 720px) {
+            padding-left: 40px;
+        }
+
+        &amp;amp;:nth-child(2) {
+            @media (min-width: 720px) {
+                padding-top: 60px;
+            }
+        }
+
+        &amp;amp;:nth-last-child(2) {
+            @media (min-width: 720px) {
+                padding-bottom: 60px;
+            }
+        }
+
+        /* spine */
+        &amp;amp;:after {
+            content: &amp;#39;&amp;#39;;
+            position: absolute;
+            top: 0;
+            left: 30px;
+            bottom: 0;
+            width: 1px;
+            background-color: #2175D9;
+
+            @media (min-width: 720px) {
+                left: 50%;
+            }
+        }
+
+        /* both odds and evens, not header or footer */
+        &amp;amp;:nth-child(even):not(:last-child),
+        &amp;amp;:nth-child(odd):not(:first-child):not(:last-child) {
+            border-top: 0;
+            border-bottom: 0;
+
+            @media (min-width: 720px) {
+                border: 0;
+            }
+
+            &amp;amp;:after {
+                left: 40px;
+
+                @media (min-width: 720px) {
+                    left: 50%;
+                }
+            }
+        }
+
+        /* evens, not header */
+        &amp;amp;:nth-child(even):not(:last-child) {
+
+            @media (min-width: 720px) {
+                padding-right: calc(50% + 40px);
+                text-align: right;
+
+                time:before {
+                    right: -50px;
+                }
+            }
+        }
+
+        /* odds, not footer */
+        &amp;amp;:nth-child(odd):not(:first-child):not(:last-child) {
+
+            @media (min-width: 720px) {
+                padding-left: calc(50% + 40px);
+
+                time:before {
+                    left: -50px;
+                }
+            }
+        }
+
+        /* header and footer */
+        &amp;amp;:first-child,
+        &amp;amp;:last-child {
+            margin: 0 10px;
+            background-color: transparent;
+
+            @media (min-width: 720px) {
+                margin: 0 40px;
+                text-align: center;
+            }
+
+            &amp;amp;:after {
+                @media (min-width: 720px) {
+                    height: 80px;
+                }
+            }
+
+            time:before {
+                left: -60px;
+            }
+
+            time {
+
+                @media (min-width: 720px) {
+                    position: static;
+                }
+
+                &amp;amp;:before {
+                    width: 40px;
+                    height: 40px;
+                    left: -70px;
+
+                    @media (min-width: 720px) {
+                        top: auto;
+                        left: 50%;
+                        transform: translateX(-50%);
+                    }
+                }
+            }
+        }
+
+        /* header */
+        &amp;amp;:first-child {
+            border-bottom: 0;
+
+            @media (min-width: 720px) {
+                padding-top: 50px;
+                padding-bottom: 140px;
+            }
+
+            &amp;amp;:after {
+
+                @media (min-width: 720px) {
+                    top: auto;
+                    bottom: 0;
+                }
+            }
+
+            time:before {
+                @media (min-width: 720px) {
+                    bottom: 80px;
+                }
+            }
+        }
+
+        /* footer */
+        &amp;amp;:last-child {
+            border-top: 0;
+
+            @media (min-width: 720px) {
+                padding-top: 140px;
+                padding-bottom: 50px;
+            }
+
+            time:before {
+
+                @media (min-width: 720px) {
+                    top: 80px;
+                }
+            }
+        }
+
+        /* dots */
+        time {
+            position: relative;
+            color: #2175D9;
+            font-size: 25px;
+
+            &amp;amp;:before {
+                content: &amp;#39;&amp;#39;;
+                transform: translateY(-50%);
+                position: absolute;
+                top: 50%;
+                left: -50px;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background-color: #2175D9;
+
+                @media (min-width: 720px) {
+                    left: auto;
+                }
+            }
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The result.&lt;/p&gt;
+
+&lt;p data-height="542" data-theme-id="0" data-slug-hash="YyvxZZ" data-default-tab="result" data-user="stephanvanopstal" class='codepen'&gt;See the Pen &lt;a href='http://codepen.io/stephanvanopstal/pen/YyvxZZ/'&gt;Responsive CSS timeline&lt;/a&gt; by Stephan van Opstal (&lt;a href='http://codepen.io/stephanvanopstal'&gt;@stephanvanopstal&lt;/a&gt;) on &lt;a href='http://codepen.io'&gt;CodePen&lt;/a&gt;.&lt;/p&gt;
+
+&lt;script async src="//assets.codepen.io/assets/embed/ei.js"&gt;&lt;/script&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Gulp &amp; Sass: keep your task running</title>
+    <link rel="alternate" href="http://www.vanopstal.eu/blog/gulp-sass-keep-your-task-running"/>
+    <id>http://www.vanopstal.eu/blog/gulp-sass-keep-your-task-running</id>
+    <published>2015-09-22T02:00:00+02:00</published>
+    <updated>2015-09-22T15:00:09+02:00</updated>
+    <author>
+      <name>Stephan van Opstal</name>
+    </author>
+    <content type="html">&lt;p&gt;So you&amp;#39;re using &lt;a href="https://www.npmjs.com/package/gulp-sass"&gt;gulp-sass&lt;/a&gt; to compile your Sass files but every time your code contains an error Gulp stops. After fixing the error you find yourself manually restarting the Gulp process. Here&amp;#39;s a little tip to avoid that and keep Gulp running.&lt;/p&gt;
+
+&lt;p&gt;For the sake of simplicity let&amp;#39;s say your Gulp config looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="javascript"&gt;var gulp = require(&amp;#39;gulp&amp;#39;);
+var sass = require(&amp;#39;gulp-sass&amp;#39;);
+
+gulp.task(&amp;#39;styles&amp;#39;, function () {
+    gulp.src(&amp;#39;./sass/**/*.scss&amp;#39;)
+    .pipe(sass({
+        outputStyle: &amp;#39;compressed&amp;#39;
+    }))
+    .pipe(gulp.dest(&amp;#39;./css&amp;#39;));
+});
+
+gulp.task(&amp;#39;default&amp;#39;, function() {
+    gulp.watch(&amp;#39;./sass/**/*.scss&amp;#39;, [&amp;#39;styles&amp;#39;]);
+});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;#39;s change the &lt;code&gt;styles&lt;/code&gt; task by catching the error using the onError option that &lt;a href="https://www.npmjs.com/package/gulp-sass"&gt;gulp-sass&lt;/a&gt; provides:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="javascript"&gt;//...
+
+gulp.task(&amp;#39;styles&amp;#39;, function () {
+    gulp.src(&amp;#39;./sass/**/*.scss&amp;#39;)
+    .pipe(sass({
+        outputStyle: &amp;#39;compressed&amp;#39;,
+        onError: function(err) {
+            return console.log(err);
+        }
+    }))
+    .pipe(gulp.dest(&amp;#39;./css&amp;#39;));
+});
+
+//...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There we go! Gulp will now keep running if it finds an error and recompiles after the error has been fixed without you manually restarting Gulp.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Reactive Google maps with Meteor</title>
+    <link rel="alternate" href="http://www.vanopstal.eu/blog/reactive-google-maps-with-meteor"/>
+    <id>http://www.vanopstal.eu/blog/reactive-google-maps-with-meteor</id>
+    <published>2015-08-21T02:00:00+02:00</published>
+    <updated>2015-08-25T11:06:25+02:00</updated>
+    <author>
+      <name>Stephan van Opstal</name>
+    </author>
+    <content type="html">&lt;p&gt;In this article we are going to create a list of places that updates while the user navigates a Google map. It will only show places from the database that are within the visible area of the Google map.&lt;/p&gt;
+
+&lt;p&gt;We&amp;#39;ll use the &lt;a href="https://atmospherejs.com/dburles/google-maps"&gt;dburles:google-maps&lt;/a&gt; package that&amp;#39;s makes it easy for us to include a map in our template.&lt;/p&gt;
+
+&lt;p&gt;Find the full code example on &lt;a href="http://www.github.com/st3phan/meteor-reactive-googlemaps-example"&gt;GitHub&lt;/a&gt;. The demo can be found  &lt;a href="http://reactive-googlemaps-example.meteor.com"&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;First add the required package by running the following command in your terminal.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;meteor add dburles:google-maps
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create the Places collection. Note that this line is not wrapped in a &lt;code&gt;isClient&lt;/code&gt; or &lt;code&gt;isServer&lt;/code&gt; function because we need the collection on both client as server side.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="javascript"&gt;Places = new Mongo.Collection(&amp;#39;places&amp;#39;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create an array with names and coordinates of some places and populate the database with it. Make sure this code lives only on the server by wrapping it in a &lt;code&gt;isServer&lt;/code&gt; function.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="javascript"&gt;if (Meteor.isServer) {
+    Meteor.startup(function() {
+        var data = [
+            {
+                &amp;quot;name&amp;quot;: &amp;quot;Nieuwmarkt, Amsterdam&amp;quot;,
+                &amp;quot;location&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;Point&amp;quot;,
+                    &amp;quot;coordinates&amp;quot;: {
+                        &amp;quot;lat&amp;quot;: 52.372466,
+                        &amp;quot;lng&amp;quot;: 4.900722
+                    }
+                }
+            },
+            // ... code removed for clarity ...
+            {
+                &amp;quot;name&amp;quot;: &amp;quot;Ransdorp, Amsterdam&amp;quot;,
+                &amp;quot;location&amp;quot;: {
+                    &amp;quot;type&amp;quot;: &amp;quot;Point&amp;quot;,
+                    &amp;quot;coordinates&amp;quot;: {
+                        &amp;quot;lat&amp;quot;: 52.392954,
+                        &amp;quot;lng&amp;quot;: 4.993593
+                    }
+                }
+            },
+        ];
+
+        if(!Places.find().count()) {
+            _.each(data, function(place) {
+                Places.insert({
+                    name: place.name,
+                    location: {
+                        type: &amp;#39;Point&amp;#39;,
+                        coordinates: [
+                            place.location.coordinates.lat,
+                            place.location.coordinates.lng
+                        ]
+                    }
+                })
+            });
+        }
+    });
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a publication that returns the places that are within a box. When using &lt;code&gt;$geoWithin&lt;/code&gt; with the &lt;code&gt;$box&lt;/code&gt; operator, &lt;code&gt;$geoWithin&lt;/code&gt; returns the places based on grid coordinates. The box variable will therefore hold an array with latitudes and longitudes of our box. More on this later.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="javascript"&gt;if (Meteor.isServer) {
+
+    // ... code removed for clarity ...
+
+    Meteor.publish(&amp;#39;places&amp;#39;, function(box) {
+        var find = {
+            location: {
+                $geoWithin: {
+                    $box: box
+                }
+            }
+        };
+
+        return Places.find(find);
+    });
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Remove the autopublish package because otherwise our publication will always return all places from the database. We only need those visible in our box.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;meteor remove autopublish
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now on to the clientside code.&lt;/p&gt;
+
+&lt;p&gt;Create a template that will hold our map and the list of visible places.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="html"&gt;&amp;lt;template name=&amp;quot;map&amp;quot;&amp;gt;
+    &amp;lt;div class=&amp;quot;map&amp;quot;&amp;gt;
+        {{&amp;gt; googleMap name=&amp;quot;map&amp;quot; options=mapOptions}}
+    &amp;lt;/div&amp;gt;
+    &amp;lt;ol class=&amp;quot;places&amp;quot;&amp;gt;
+        {{#each places}}
+            &amp;lt;li&amp;gt;{{name}}&amp;lt;/li&amp;gt;
+        {{/each}}
+    &amp;lt;/ol&amp;gt;
+&amp;lt;/template&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Load the Google maps assets and register an &lt;code&gt;onCreated&lt;/code&gt; function to be called when an instance of our map template is created. Within this function we&amp;#39;ll register another function which will check when our map is ready. &lt;code&gt;map&lt;/code&gt; is the name of our map instance here.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="javascript"&gt;if (Meteor.isClient) {
+    Meteor.startup(function() {
+        GoogleMaps.load();
+    });
+
+    Template.map.onCreated(function() {
+        GoogleMaps.ready(&amp;#39;map&amp;#39;, function(map) {
+
+        });
+    });
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For our template to work we&amp;#39;ll need to create two helpers. &lt;code&gt;mapOptions&lt;/code&gt; returns the options for the google map which centers on Amsterdam with a nice zoom level. &lt;code&gt;places&lt;/code&gt; returns the data from the Places publication.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="javascript"&gt;if (Meteor.isClient) {
+
+    // ... code removed for clarity ...
+
+    Template.map.helpers({
+        mapOptions: function() {
+            // Initialize the map
+            if (GoogleMaps.loaded()) {
+                return {
+                    // Amsterdam city center coordinates
+                    center: new google.maps.LatLng(52.370216, 4.895168),
+                    zoom: 12
+                };
+            }
+        },
+        places: function() {
+            return Places.find();
+        }
+    });
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Next we want to know the coordinates of the visible area of our map (box). Because we&amp;#39;ll be asking for these coordinates in multiple places we&amp;#39;ll create a function for this. This function doesn&amp;#39;t return anything but instead sets a Session variable which holds our coordinates. To use the &lt;code&gt;$box&lt;/code&gt; operator in our mongo query, we must specify the bottom left and top right corners of the box in an array object.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="javascript"&gt;if (Meteor.isClient) {
+
+    // ... code removed for clarity ...
+
+    function getBox() {
+        var bounds = GoogleMaps.maps.map.instance.getBounds();
+        var ne = bounds.getNorthEast();
+        var sw = bounds.getSouthWest();
+        Session.set(&amp;#39;box&amp;#39;, [[sw.lat(),sw.lng()], [ne.lat(),ne.lng()]]);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For the places to actually show up on our map and list we need a subscription to our Places collection. We&amp;#39;ll wrap this code in an &lt;code&gt;autorun&lt;/code&gt; so that every time the Session variable with our coordinates changes we resubscribe to our collection using the updated box coordinates.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="javascript"&gt;if (Meteor.isClient) {
+
+    // ... code removed for clarity ...
+
+    Template.map.onCreated(function() {
+        var self = this;
+
+        GoogleMaps.ready(&amp;#39;map&amp;#39;, function(map) {
+            self.autorun(function() {
+                getBox();
+                Meteor.subscribe(&amp;#39;places&amp;#39;, Session.get(&amp;#39;box&amp;#39;));
+            });
+        });
+    });
+
+    // ... code removed for clarity ...
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we that we have a subscription to our Places collection we can add the markers to our map. We&amp;#39;ll check when our subscription is ready, then query our collection and finish with looping through the results and adding the markers. Note the &lt;code&gt;lookup&lt;/code&gt; variable which holds an array of all the markers already added. This way we avoid duplicate markers on the map.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="javascript"&gt;if (Meteor.isClient) {
+    var lookup = [];
+
+    // ... code removed for clarity ...
+
+    Template.map.onCreated(function() {
+        var self = this;
+
+        GoogleMaps.ready(&amp;#39;map&amp;#39;, function(map) {
+            self.autorun(function() {
+                getBox();
+                var handle = Meteor.subscribe(&amp;#39;places&amp;#39;, Session.get(&amp;#39;box&amp;#39;));
+                if (handle.ready()) {
+                    var places = Places.find().fetch();
+
+                    _.each(places, function(place) {
+                        var lat = place.location.coordinates[0];
+                        var lng = place.location.coordinates[1];
+
+                        if (!_.contains(lookup, lat+&amp;#39;,&amp;#39;+lng)) {
+                            var marker = new google.maps.Marker({
+                                position: new google.maps.LatLng(lat, lng),
+                                map: GoogleMaps.maps.map.instance
+                            });
+                            lookup.push(lat+&amp;#39;,&amp;#39;+lng);
+                        }
+                    });
+                }
+            });
+        });
+    });
+
+    // ... code removed for clarity ...
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now every time the box of our map changes (by zooming or dragging) we want the list of places next to our map to represent the visible places on our map.&lt;/p&gt;
+
+&lt;p&gt;Add the event listeners for the drag en zoom events and we&amp;#39;re done.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="javascript"&gt;if (Meteor.isClient) {
+
+    // ... code removed for clarity ...
+
+    Template.map.onCreated(function() {
+        var self = this;
+
+        GoogleMaps.ready(&amp;#39;map&amp;#39;, function(map) {
+
+            // ... code removed for clarity ...
+
+            google.maps.event.addListener(map.instance, &amp;#39;dragend&amp;#39;, function(e){
+                 getBox();
+            });
+
+            google.maps.event.addListener(map.instance, &amp;#39;zoom_changed&amp;#39;, function(e){
+                 getBox();
+            });
+        });
+    });
+
+    // ... code removed for clarity ...
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now play with zooming in and out and watch how our list represents the places visible on our map!&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>BrowserSync extremely slow on OS X?</title>
+    <link rel="alternate" href="http://www.vanopstal.eu/blog/browsersync-extremely-slow-on-os-x"/>
+    <id>http://www.vanopstal.eu/blog/browsersync-extremely-slow-on-os-x</id>
+    <published>2015-08-14T02:00:00+02:00</published>
+    <updated>2015-08-24T14:26:31+02:00</updated>
+    <author>
+      <name>Stephan van Opstal</name>
+    </author>
+    <content type="html">&lt;p&gt;If you&amp;#39;re developing on OS X and experiencing BrowserSync to be very slow there’s a good chance that changing the .local domain in your url to .dev will fix the problem. Why? I have no idea. The fix is really illogical but hey, it works! It might have something to do with Bonjour using the .local domain as well.&lt;/p&gt;
+
+&lt;p&gt;In my case I changed &lt;code&gt;http://wordpress.local:8080&lt;/code&gt; to &lt;code&gt;http://wordpress.dev:8080&lt;/code&gt; et voil&amp;agrave;, everything’s snappy again.&lt;/p&gt;
+</content>
+  </entry>
+</feed>

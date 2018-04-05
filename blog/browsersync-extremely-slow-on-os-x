@@ -1,0 +1,62 @@
+<!doctype html>
+<html class="no-js" lang="nl">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>BrowserSync extremely slow on OS X? - Stephan van Opstal</title>
+        <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/blog/feed.xml" />
+        <meta name="description" content="Stephan van Opstal is a freelance Front-end Developer specialized in RWD and HTML/CSS.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="/stylesheets/blog/blog.css">
+        <link rel="stylesheet" href="/stylesheets/blog/solarized_light.css">
+</head>
+<body class="blog">
+
+    <nav class="nav">
+        <a href="/" class="home">Home</a>
+        <ol>
+            <li><a href="/blog">Articles</a></li>
+            <li><a href="/">Portfolio</a></li>
+        </ol>
+    </nav>
+
+        <article class="blog__article" role="main" itemscope itemtype="http://schema.org/BlogPosting">
+        <h1 itemprop="name">BrowserSync extremely slow on OS X?</h1>
+        <p>If you&#39;re developing on OS X and experiencing BrowserSync to be very slow there’s a good chance that changing the .local domain in your url to .dev will fix the problem. Why? I have no idea. The fix is really illogical but hey, it works! It might have something to do with Bonjour using the .local domain as well.</p>
+
+<p>In my case I changed <code>http://wordpress.local:8080</code> to <code>http://wordpress.dev:8080</code> et voil&agrave;, everything’s snappy again.</p>
+
+        <footer><p>Published: <data itemprop="datePublished" value="2015-08-14">August 14, 2015</data>.</p></footer>
+        <div class="blog__article__disqus">
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+//<![CDATA[
+                  var disqus_shortname = 'stephanvanopstal';
+          
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+//]]>
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+        </div>
+    </article>
+
+
+    <script src="/javascripts/blog/all.js"></script>
+    <script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-878657-3', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>

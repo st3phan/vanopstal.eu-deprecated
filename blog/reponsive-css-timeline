@@ -1,0 +1,290 @@
+<!doctype html>
+<html class="no-js" lang="nl">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Responsive CSS timeline - Stephan van Opstal</title>
+        <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/blog/feed.xml" />
+        <meta name="description" content="Stephan van Opstal is a freelance Front-end Developer specialized in RWD and HTML/CSS.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="/stylesheets/blog/blog.css">
+        <link rel="stylesheet" href="/stylesheets/blog/solarized_light.css">
+</head>
+<body class="blog">
+
+    <nav class="nav">
+        <a href="/" class="home">Home</a>
+        <ol>
+            <li><a href="/blog">Articles</a></li>
+            <li><a href="/">Portfolio</a></li>
+        </ol>
+    </nav>
+
+        <article class="blog__article" role="main" itemscope itemtype="http://schema.org/BlogPosting">
+        <h1 itemprop="name">Responsive CSS timeline</h1>
+        <p>A client asked me to code a responsive CSS-only timeline, and so I did. The CSS might look a bit tedious at first but it really isn&#39;t. No rocket science here. You can see the whole thing in action on <a href="http://codepen.io/stephanvanopstal/full/YyvxZZ/">Codepen</a>.</p>
+
+<p>The markup is really basic. The ordered list of events asks for an <code>&lt;ol&gt;</code>. The <code>&lt;time&gt;</code> element holds the date.</p>
+
+<pre><code class="html">&lt;ol class=&quot;timeline&quot;&gt;
+    &lt;li&gt;
+        &lt;time&gt;2015&lt;/time&gt;
+        &lt;p&gt;Bacon ipsum dolor amet cupim fatback strip steak beef ribs beef. Ham swine salami ribeye kielbasa, bacon boudin pork chop beef brisket fatback hamburger pancetta shoulder sirloin.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;time&gt;2014&lt;/time&gt;
+        &lt;p&gt;Capicola chuck beef porchetta bresaola short ribs sausage ground round chicken shoulder jowl. Jowl prosciutto leberkas, pork picanha swine sirloin turducken salami venison.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;time&gt;2013&lt;/time&gt;
+        &lt;p&gt;Meatball corned beef tri-tip, pork chop salami spare ribs chuck filet mignon ham meatloaf sausage.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;time&gt;2012&lt;/time&gt;
+        &lt;p&gt; T-bone swine biltong leberkas jerky sirloin strip steak drumstick pig ham meatball frankfurter bresaola turducken.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+        &lt;time&gt;2011&lt;/time&gt;
+        &lt;p&gt;Flank filet mignon chicken, sausage drumstick doner hamburger swine tail cupim ham hock meatloaf biltong. Short ribs boudin chuck bresaola strip steak pastrami cow beef ribs porchetta tail rump filet mignon t-bone.&lt;/p&gt;
+    &lt;/li&gt;
+&lt;/ol&gt;
+</code></pre>
+
+<p>The SCSS (Sass). Where I used padding for the odd/even styling because the events needed a background-color. The spine and the dots are all absolute positioned pseudo elements. Media queries are used to position both the line and dots.</p>
+
+<pre><code class="css">.timeline {
+    margin: 0;
+    padding: 40px;
+    list-style-type: none;
+    font-family: Georgia;
+
+    li {
+        box-sizing: border-box;
+        position: relative;
+        background-color: #EDF5FF;
+        padding: 30px 40px 30px 80px;
+        border: 2px solid #EDF5FF;
+
+        @media (min-width: 720px) {
+            padding-left: 40px;
+        }
+
+        &amp;:nth-child(2) {
+            @media (min-width: 720px) {
+                padding-top: 60px;
+            }
+        }
+
+        &amp;:nth-last-child(2) {
+            @media (min-width: 720px) {
+                padding-bottom: 60px;
+            }
+        }
+
+        /* spine */
+        &amp;:after {
+            content: &#39;&#39;;
+            position: absolute;
+            top: 0;
+            left: 30px;
+            bottom: 0;
+            width: 1px;
+            background-color: #2175D9;
+
+            @media (min-width: 720px) {
+                left: 50%;
+            }
+        }
+
+        /* both odds and evens, not header or footer */
+        &amp;:nth-child(even):not(:last-child),
+        &amp;:nth-child(odd):not(:first-child):not(:last-child) {
+            border-top: 0;
+            border-bottom: 0;
+
+            @media (min-width: 720px) {
+                border: 0;
+            }
+
+            &amp;:after {
+                left: 40px;
+
+                @media (min-width: 720px) {
+                    left: 50%;
+                }
+            }
+        }
+
+        /* evens, not header */
+        &amp;:nth-child(even):not(:last-child) {
+
+            @media (min-width: 720px) {
+                padding-right: calc(50% + 40px);
+                text-align: right;
+
+                time:before {
+                    right: -50px;
+                }
+            }
+        }
+
+        /* odds, not footer */
+        &amp;:nth-child(odd):not(:first-child):not(:last-child) {
+
+            @media (min-width: 720px) {
+                padding-left: calc(50% + 40px);
+
+                time:before {
+                    left: -50px;
+                }
+            }
+        }
+
+        /* header and footer */
+        &amp;:first-child,
+        &amp;:last-child {
+            margin: 0 10px;
+            background-color: transparent;
+
+            @media (min-width: 720px) {
+                margin: 0 40px;
+                text-align: center;
+            }
+
+            &amp;:after {
+                @media (min-width: 720px) {
+                    height: 80px;
+                }
+            }
+
+            time:before {
+                left: -60px;
+            }
+
+            time {
+
+                @media (min-width: 720px) {
+                    position: static;
+                }
+
+                &amp;:before {
+                    width: 40px;
+                    height: 40px;
+                    left: -70px;
+
+                    @media (min-width: 720px) {
+                        top: auto;
+                        left: 50%;
+                        transform: translateX(-50%);
+                    }
+                }
+            }
+        }
+
+        /* header */
+        &amp;:first-child {
+            border-bottom: 0;
+
+            @media (min-width: 720px) {
+                padding-top: 50px;
+                padding-bottom: 140px;
+            }
+
+            &amp;:after {
+
+                @media (min-width: 720px) {
+                    top: auto;
+                    bottom: 0;
+                }
+            }
+
+            time:before {
+                @media (min-width: 720px) {
+                    bottom: 80px;
+                }
+            }
+        }
+
+        /* footer */
+        &amp;:last-child {
+            border-top: 0;
+
+            @media (min-width: 720px) {
+                padding-top: 140px;
+                padding-bottom: 50px;
+            }
+
+            time:before {
+
+                @media (min-width: 720px) {
+                    top: 80px;
+                }
+            }
+        }
+
+        /* dots */
+        time {
+            position: relative;
+            color: #2175D9;
+            font-size: 25px;
+
+            &amp;:before {
+                content: &#39;&#39;;
+                transform: translateY(-50%);
+                position: absolute;
+                top: 50%;
+                left: -50px;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background-color: #2175D9;
+
+                @media (min-width: 720px) {
+                    left: auto;
+                }
+            }
+        }
+    }
+}
+</code></pre>
+
+<p>The result.</p>
+
+<p data-height="542" data-theme-id="0" data-slug-hash="YyvxZZ" data-default-tab="result" data-user="stephanvanopstal" class='codepen'>See the Pen <a href='http://codepen.io/stephanvanopstal/pen/YyvxZZ/'>Responsive CSS timeline</a> by Stephan van Opstal (<a href='http://codepen.io/stephanvanopstal'>@stephanvanopstal</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+
+        <footer><p>Published: <data itemprop="datePublished" value="2015-10-30">October 30, 2015</data>.</p></footer>
+        <div class="blog__article__disqus">
+            <div id="disqus_thread"></div>
+<script type="text/javascript">
+//<![CDATA[
+                  var disqus_shortname = 'stephanvanopstal';
+          
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+//]]>
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+        </div>
+    </article>
+
+
+    <script src="/javascripts/blog/all.js"></script>
+    <script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-878657-3', 'auto');
+  ga('send', 'pageview');
+</script>
+
+  </body>
+</html>
